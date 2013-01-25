@@ -7,13 +7,11 @@ if (!defined('TYPO3_MODE')) {
 	'TYPO3.' . $_EXTKEY,
 	'Stars',
 	array(
-		'Rating' => 'show, create',
+		'Stars' => 'index',
 		
 	),
 	// non-cacheable actions
 	array(
-		'Rating' => 'create',
-		
 	)
 );
 

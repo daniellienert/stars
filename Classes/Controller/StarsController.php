@@ -32,37 +32,14 @@ namespace TYPO3\Stars\Controller;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class RatingController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
+class StarsController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 
-	/**
-	 * ratingRepository
-	 *
-	 * @var \TYPO3\Stars\Domain\Repository\RatingRepository
-	 * @inject
-	 */
-	protected $ratingRepository;
-
-	/**
-	 * action show
-	 *
-	 * @param \TYPO3\Stars\Domain\Model\Rating $rating
-	 * @return void
-	 */
-	public function showAction(\TYPO3\Stars\Domain\Model\Rating $rating) {
-		$this->view->assign('rating', $rating);
+	public function indexAction() {
+		$page = $this->objectManager->get('TYPO3\\Stars\\Domain\\Model\\Page');
+		$page->setUid($GLOBALS['TSFE']->id);
+		$this->view->assign('ratingObject', $page);
 	}
 
-	/**
-	 * action create
-	 *
-	 * @param \TYPO3\Stars\Domain\Model\Rating $newRating
-	 * @return void
-	 */
-	public function createAction(\TYPO3\Stars\Domain\Model\Rating $newRating) {
-		$this->ratingRepository->add($newRating);
-		$this->flashMessageContainer->add('Your new Rating was created.');
-		$this->redirect('list');
-	}
 
 }
 ?>

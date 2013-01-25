@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2013-01-25T18:39:56Z" product-name="stars">
+		<header/>
+		<body>
+
+			<trans-unit id="object.description">
+				<source>object</source>
+			</trans-unit>
+			<trans-unit id="object_id.description">
+				<source>objectId</source>
+			</trans-unit>
+			<trans-unit id="ip.description">
+				<source>ip</source>
+			</trans-unit>
+			<trans-unit id="vote.description">
+				<source>vote</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

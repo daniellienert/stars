@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2013-01-25T18:39:56Z" product-name="stars">
+		<header/>
+		<body>
+
+			<trans-unit id="tx_stars_domain_model_rating">
+				<source>Rating</source>
+			</trans-unit>
+			<trans-unit id="tx_stars_domain_model_rating.object">
+				<source>Object</source>
+			</trans-unit>
+			<trans-unit id="tx_stars_domain_model_rating.object_id">
+				<source>Object Id</source>
+			</trans-unit>
+			<trans-unit id="tx_stars_domain_model_rating.ip">
+				<source>Ip</source>
+			</trans-unit>
+			<trans-unit id="tx_stars_domain_model_rating.vote">
+				<source>Vote</source>
+			</trans-unit>
+
+		</body>
+	</file>
+</xliff>

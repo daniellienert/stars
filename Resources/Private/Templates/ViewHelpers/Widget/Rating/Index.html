@@ -1,1 +1,30 @@
-Rating
+
+<!-- include CSS & JS files -->
+<!-- CSS file -->
+<link rel="stylesheet" type="text/css" href="typo3conf/ext/stars/Resources/Public/Javascript/JRating/jquery/jRating.jquery.css" media="screen" />
+<!-- jQuery files -->
+<script type="text/javascript" src="typo3conf/ext/stars/Resources/Public/Javascript/JRating/jquery/jquery.js"></script>
+<script type="text/javascript" src="typo3conf/ext/stars/Resources/Public/Javascript/JRating/jquery/jRating.jquery.js"></script>
+
+
+<div class="exemple">
+
+    <!-- in this exemple, 12 is the average and 1 is the id of the line to update in DB -->
+    <div class="basic" data-average="5" data-id="1"></div>
+
+
+    <script type="text/javascript">
+
+        $(document).ready(function(){
+            // simple jRating call
+            $(".basic").jRating(<![CDATA[{]]>
+                bigStarsPath: 'typo3conf/ext/stars/Resources/Public/Javascript/JRating/jquery/icons/stars.png',
+                smallStarsPath: 'typo3conf/ext/stars/Resources/Public/Javascript/JRating/jquery/icons/small.png',
+                type:'big',
+                showRateInfo: false,
+                phpPath: "{f:widget.uri(action:'vote', ajax: 1, arguments:{rating:{object:ratingObjectClass, objectId:ratingObjectUid}})}",
+            });
+        });
+
+    </script>
+</div>

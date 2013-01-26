@@ -63,6 +63,13 @@ class Rating extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	protected $vote;
 
 	/**
+	 * @var string
+	 */
+	protected $cookieId;
+
+
+
+	/**
 	 * Returns the object
 	 *
 	 * @return \string $object
@@ -138,5 +145,18 @@ class Rating extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 		$this->vote = $vote;
 	}
 
+	/**
+	 * @param string $cookieId
+	 */
+	public function setCookieId($cookieId) {
+		$this->cookieId = $cookieId;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getCookieId() {
+		return $this->cookieId;
+	}
 }
 ?>

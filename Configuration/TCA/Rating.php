@@ -129,6 +129,15 @@ $TCA['tx_stars_domain_model_rating'] = array(
 				'eval' => 'trim'
 			),
 		),
+		'cookie_id' => array(
+			'exclude' => 0,
+			'label' => 'LLL:EXT:stars/Resources/Private/Language/locallang_db.xlf:tx_stars_domain_model_rating.cookie_id',
+			'config' => array(
+				'type' => 'input',
+				'size' => 30,
+				'eval' => 'trim'
+			),
+		),
 	),
 );
 

@@ -19,8 +19,38 @@ class RatingController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetContro
 	protected $ratingStoragePid;
 
 
+	/**
+	 * @var object
+	 */
+	protected $ratingObject;
+
+
+	/**
+	 * @var integer
+	 */
+	protected $ratingObjectUid;
+
+
+	/**
+	 * @var \TYPO3\Stars\Validation\Validator\RatingValidator
+	 * @inject
+	 */
+	protected $ratingValidator;
+
+
 	public function initializeAction() {
 		$this->ratingStoragePid = (int) $this->widgetConfiguration['storagePid'];
+		$this->ratingObject = $this->widgetConfiguration['ratingObject'];
+
+		if($this->ratingObject !== NULL
+			&& is_object($this->ratingObject)
+			&& method_exists($this->ratingObject, 'getUid')
+			&& $this->ratingObject->getUid() > 0
+		) {
+			$this->ratingObjectUid = $this->ratingObject->getUid();
+		} else {
+			Throw new \TYPO3\CMS\Extbase\Configuration\Exception('Given object is not a valid voting object');
+		}
 	}
 
 
@@ -29,38 +59,81 @@ class RatingController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetContro
 	 */
 	public function indexAction() {
 
-		$ratingObject = $this->widgetConfiguration['ratingObject'];
+		$this->view->assignMultiple(array(
+			'ratingObjectUid' => $this->ratingObject->getUid(),
+			'ratingObjectClass' => get_class($this->ratingObject),
+			'averageVote' => $this->ratingRepository->getAverageRateByClassAndUid(get_class($this->ratingObject), $this->ratingObjectUid),
+			'starCount' => (int) $this->widgetConfiguration['starCount'],
+			'widgetId' => $this->controllerContext->getRequest()->getWidgetContext()->getAjaxWidgetIdentifier()
+			)
+		);
+	}
 
-		if($ratingObject !== NULL && is_object($ratingObject)) {
 
-			if(method_exists($ratingObject, 'getUid')) {
-				$this->view->assign('ratingObjectUid', $ratingObject->getUid());
-				$this->view->assign('ratingObjectClass', get_class($ratingObject));
-			} else {
-				$this->flashMessageContainer->add('The given object has no getUid Method.');
-			}
+	/**
+	 * @return string
+	 */
+	public function rateAction() {
+		$rating = $this->createRating();
 
-		} else {
-			$this->flashMessageContainer->add('No RatingObject given.');
+		$rating->setVote($this->request->getArgument('rate'));
+
+		if($this->ratingValidator->isValid($rating)) {
+			$this->ratingRepository->add($rating);
 		}
 
-
-		$this->view->assign('starCount', $this->widgetConfiguration['starCount']);
-
+		return '';
 	}
 
 
 
 	/**
-	 * @param \TYPO3\Stars\Domain\Model\Rating $rating
-	 * @dontverifyrequesthash
+	 * @return float
 	 */
-	public function ratingAction(\TYPO3\Stars\Domain\Model\Rating $rating) {
+	public function getRatingInfoAction() {
 
-		$rating->setVote($this->request->getArgument('rate'));
-		$rating->setPid($this->ratingStoragePid);
-		$this->ratingRepository->add($rating);
+		$ratingInfo = array(
+			'averageRating' => $this->ratingRepository->getAverageRateByClassAndUid(get_class($this->ratingObject), $this->ratingObjectUid),
+			'alreadyVoted' => !$this->ratingValidator->isValid($this->createRating())
+		);
+
+		return json_encode($ratingInfo);
 	}
+
+
+
+	/**
+	 * @return \TYPO3\Stars\Domain\Model\Rating
+	 */
+	protected function createRating() {
+		$rating = new \TYPO3\Stars\Domain\Model\Rating();
+		$rating->setObject(get_class($this->ratingObject));
+		$rating->setObjectId($this->ratingObjectUid);
+		$rating->setPid($this->ratingStoragePid);
+
+		$rating->setIp(\TYPO3\CMS\Core\Utility\GeneralUtility::getIndpEnv('REMOTE_ADDR'));
+		$rating->setCookieId($this->getVotingCookieUid());
+
+		return $rating;
+	}
+
+
+	/**
+	 * @return string
+	 */
+	protected function getVotingCookieUid() {
+		$cookieId = $_COOKIE['typo3StarsVoting'];
+
+		if(!$cookieId) {
+			$lifeTime = time() + 60 * 60 * 24 * 365;
+			$cookieId = uniqid('', TRUE);
+			setcookie('typo3StarsVoting', $cookieId, $lifeTime,'/');
+		}
+
+		return $cookieId;
+	}
+
+
 }
 
 ?>

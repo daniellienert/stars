@@ -20,9 +20,10 @@ class RatingViewHelper extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetViewHe
 	 * @param object $ratingObject
 	 * @param int $starCount
 	 * @param int $storagePid
+	 * @param bool $allowMultipleRating
 	 * @return \TYPO3\CMS\Extbase\Mvc\ResponseInterface
 	 */
-	public function render($ratingObject, $starCount=5, $storagePid=0) {
+	public function render($ratingObject, $starCount=5, $storagePid=0, $allowMultipleRating = FALSE) {
 		return $this->initiateSubRequest();
 	}
 }

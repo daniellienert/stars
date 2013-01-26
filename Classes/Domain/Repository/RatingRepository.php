@@ -34,5 +34,57 @@ namespace TYPO3\Stars\Domain\Repository;
  */
 class RatingRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
 
+
+	/**
+	 * @param string $objectClass
+	 * @param string $objectUid
+	 * @return float
+	 */
+	public function getAverageRateByClassAndUid($objectClass, $objectUid) {
+
+		$objectClass = str_replace('\\', '\\\\', $objectClass);
+
+		$query = $this->createQuery();
+		$query->getQuerySettings()->setRespectStoragePage(FALSE);
+		$query->getQuerySettings()->setReturnRawQueryResult(TRUE);
+
+		$statement = sprintf("SELECT AVG(vote) as avgVote
+						FROM %s
+						WHERE object = '%s'
+						AND object_id = %s
+						GROUP by object_id", 'tx_stars_domain_model_rating', $objectClass, $objectUid);
+
+		$result = $query->statement($statement)->execute();
+
+		return $result[0]['avgVote'];
+	}
+
+
+	/**
+	 * @param \TYPO3\Stars\Domain\Model\Rating $rating
+	 * @return bool
+	 */
+	public function ratingExists(\TYPO3\Stars\Domain\Model\Rating $rating) {
+		$ipLockTime = 24*60*60; /** 1 day ipLock */
+
+		$query = $this->createQuery();
+
+		$query->getQuerySettings()->setStoragePageIds(array($rating->getPid()));
+
+		$objectCount = $query->matching(
+			$query->logicalAnd(
+				$query->equals('object', $rating->getObject()),
+				$query->equals('objectId', $rating->getObjectId()),
+				$query->logicalOr(
+					$query->equals('ip', $rating->getIp()),
+					$query->equals('cookieId', $rating->getCookieId())
+				)
+			)
+
+		)->count();
+
+		return $objectCount > 0 ? TRUE : FALSE;
+	}
+
 }
 ?>

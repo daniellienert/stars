@@ -65,8 +65,6 @@ class RatingRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
 	 * @return bool
 	 */
 	public function ratingExists(\TYPO3\Stars\Domain\Model\Rating $rating) {
-		$ipLockTime = 24*60*60; /** 1 day ipLock */
-
 		$query = $this->createQuery();
 
 		$query->getQuerySettings()->setStoragePageIds(array($rating->getPid()));

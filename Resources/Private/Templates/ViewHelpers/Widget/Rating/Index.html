@@ -15,14 +15,16 @@
 
         $(document).ready(function(){
             $.get("{f:widget.uri(action:'getRatingInfo', ajax: 1)}", function(data) {
-                $("#rating-widgetId").attr('data-average',data.averageRating);
+                var dataObj = jQuery.parseJSON(data);
+
+                $("#rating-widgetId").attr('data-average',dataObj.averageRating);
 
                 $(".jRating").jRating(<![CDATA[{]]>
                     bigStarsPath: 'typo3conf/ext/stars/Resources/Public/Javascript/JRating/jquery/icons/stars.png',
                     smallStarsPath: 'typo3conf/ext/stars/Resources/Public/Javascript/JRating/jquery/icons/small.png',
                     type:'big',
                     showRateInfo: false,
-                    isDisabled: data.alreadyVoted,
+                    isDisabled: dataObj.alreadyVoted,
                     phpPath: "{f:widget.uri(action:'vote', ajax: 1)}"
                 });
 

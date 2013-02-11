@@ -1,6 +1,5 @@
 <?php
-
-namespace TYPO3\Stars\Tests;
+namespace TYPO3\Stars\Tests\ViewHelpers\Widget\Controller;
 /***************************************************************
  *  Copyright notice
  *
@@ -26,7 +25,7 @@ namespace TYPO3\Stars\Tests;
  ***************************************************************/
 
 /**
- * Test case for class \TYPO3\Stars\Domain\Model\Rating.
+ * Test case for class Tx_Stars_Controller_RatingController.
  *
  * @version $Id$
  * @copyright Copyright belongs to the respective authors
@@ -37,83 +36,47 @@ namespace TYPO3\Stars\Tests;
  *
  * @author Daniel Lienert <daniel@lienert.cc>
  */
-class RatingTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
+class RatingControllerTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
+
 	/**
-	 * @var \TYPO3\Stars\Domain\Model\Rating
+	 * @var \TYPO3\Stars\ViewHelpers\Widget\Controller\RatingController
 	 */
-	protected $fixture;
+	protected $controllerFixture;
+
+
 
 	public function setUp() {
-		$this->fixture = new \TYPO3\Stars\Domain\Model\Rating();
+		$accessibleClassName = $this->buildAccessibleProxy('TYPO3\Stars\ViewHelpers\Widget\Controller\RatingController');
+		$this->controllerFixture = new $accessibleClassName();
 	}
 
 	public function tearDown() {
-		unset($this->fixture);
+		unset($this->controllerFixture);
 	}
 
-	/**
-	 * @test
-	 */
-	public function getObjectReturnsInitialValueForString() { }
 
-	/**
-	 * @test
-	 */
-	public function setObjectForStringSetsObject() { 
-		$this->fixture->setObject('Conceived at T3CON10');
-
-		$this->assertSame(
-			'Conceived at T3CON10',
-			$this->fixture->getObject()
+	public function getRepositoryNameByModelNameDataProvider() {
+		return array(
+			'v4' => array(
+				'modelName' => 'Tx_Yag_Domain_Model_Gallery',
+				'expectedRepositoryName' => 'Tx_Yag_Domain_Repository_GalleryRepository'
+			),
+			'v6' => array(
+				'modelName' => 'TYPO3\Stars\Domain\Model\Rating',
+				'expectedRepositoryName' => 'TYPO3\Stars\Domain\Repository\RatingRepository'
+			)
 		);
 	}
-	
+
 
 	/**
 	 * @test
+	 * @dataProvider getRepositoryNameByModelNameDataProvider
 	 */
-	public function setObjectIdForIntegerSetsObjectId() { 
-		$this->fixture->setObjectId(12);
-
-		$this->assertSame(
-			12,
-			$this->fixture->getObjectId()
-		);
+	public function getRepositoryNameByModelName($modelName, $expectedRepositoryName) {
+		$actualRepositoryName = $this->controllerFixture->_call('getRepositoryNameByModelName', $modelName);
+		$this->assertEquals($expectedRepositoryName, $actualRepositoryName);
 	}
-	
-	/**
-	 * @test
-	 */
-	public function getIpReturnsInitialValueForString() { }
 
-	/**
-	 * @test
-	 */
-	public function setIpForStringSetsIp() { 
-		$this->fixture->setIp('Conceived at T3CON10');
-
-		$this->assertSame(
-			'Conceived at T3CON10',
-			$this->fixture->getIp()
-		);
-	}
-	
-	/**
-	 * @test
-	 */
-	public function getVoteReturnsInitialValueForString() { }
-
-	/**
-	 * @test
-	 */
-	public function setVoteForStringSetsVote() { 
-		$this->fixture->setVote('Conceived at T3CON10');
-
-		$this->assertSame(
-			'Conceived at T3CON10',
-			$this->fixture->getVote()
-		);
-	}
-	
 }
 ?>

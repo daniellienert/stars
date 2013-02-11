@@ -42,6 +42,8 @@ class RatingControllerTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 	 */
 	protected $fixture;
 
+
+
 	public function setUp() {
 		$this->fixture = new \TYPO3\Stars\Domain\Model\Rating();
 	}

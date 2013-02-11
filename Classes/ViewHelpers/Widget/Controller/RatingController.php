@@ -80,6 +80,7 @@ class RatingController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetContro
 
 		if($this->ratingValidator->isValid($rating)) {
 			$this->ratingRepository->add($rating);
+			$this->saveRateToObject($rating);
 		}
 
 		return '';
@@ -115,6 +116,24 @@ class RatingController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetContro
 		$rating->setCookieId($this->getVotingCookieUid());
 
 		return $rating;
+	}
+
+
+	/**
+	 * @param \TYPO3\Stars\Domain\Model\Rating $rating
+	 */
+	protected function saveRateToObject(\TYPO3\Stars\Domain\Model\Rating $rating) {
+
+	}
+
+
+	/**
+	 * @param $modelName
+	 * @return mixed
+	 */
+	protected function getRepositoryNameByModelName($modelName) {
+		$nsSeparator = strpos($modelName, '\\') !== FALSE ? '\\\\' : '_';
+		return preg_replace(array('/' . $nsSeparator . 'Model' . $nsSeparator . '(?!.*' . $nsSeparator . 'Model' . $nsSeparator . ')/', '/Model/'), array($nsSeparator . 'Repository' . $nsSeparator, ''), $modelName) . 'Repository';
 	}
 
 

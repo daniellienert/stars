@@ -13,27 +13,17 @@ plugin.tx_stars {
 	}
 }
 
-plugin.tx_stars._CSS_DEFAULT_STYLE (
-	textarea.f3-form-error {
-		background-color:#FF9F9F;
-		border: 1px #FF0000 solid;
-	}
-
-	input.f3-form-error {
-		background-color:#FF9F9F;
-		border: 1px #FF0000 solid;
-	}
-
-	.tx-stars table {
-		border-collapse:separate;
-		border-spacing:10px;
-	}
-
-	.tx-stars table th {
-		font-weight:bold;
-	}
-
-	.tx-stars table td {
-		vertical-align:top;
-	}
-)
+config.tx_extbase {
+    persistence{
+        classes {
+            TYPO3\Stars\Domain\Model\Page {
+				mapping {
+					tableName = pages
+					columns {
+						lockToDomain.mapOnProperty = lockToDomain
+					}
+				}
+			}
+        }
+    }
+}

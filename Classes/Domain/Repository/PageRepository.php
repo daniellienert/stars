@@ -1,11 +1,11 @@
 <?php
-namespace TYPO3\Stars\Domain\Model;
+
+namespace TYPO3\Stars\Domain\Repository;
 
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2010-2012 Daniel Lienert <daniel@lienert.cc>
-*  			
+*  (c) 2010-2013 Daniel Lienert <daniel@lienert.cc>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -26,41 +26,13 @@ namespace TYPO3\Stars\Domain\Model;
 ***************************************************************/
 
 /**
- * Class implements access to pages table
+ * Repository for Pages
  *
  * @package Domain
- * @subpackage Model
+ * @subpackage Repository
  * @author Daniel Lienert <daniel@lienert.cc>
  */
-class Page extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
+class PageRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
 
-	/**
-	 * @var float
-	 */
-	protected $rating;
-
-
-	/**
-	 * @param int $uid
-	 */
-	public function setUid($uid) {
-		$this->uid = $uid;
-	}
-
-
-	/**
-	 * @param float $rating
-	 */
-	public function setRating($rating) {
-		$this->rating = $rating;
-	}
-
-
-	/**
-	 * @return float
-	 */
-	public function getRating() {
-		return $this->rating;
-	}
 }
 ?>

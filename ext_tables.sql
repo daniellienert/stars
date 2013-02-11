@@ -41,3 +41,10 @@ CREATE TABLE tx_stars_domain_model_rating (
 	KEY language (l10n_parent,sys_language_uid)
 
 );
+
+#
+# Extend table rating
+#
+CREATE TABLE pages (
+  `rating` float DEFAULT '0' NOT NULL,
+);

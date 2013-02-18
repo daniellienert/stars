@@ -1,6 +1,5 @@
 <?php
 namespace TYPO3\Stars\Domain\Model;
-
 /***************************************************************
 *  Copyright notice
 *

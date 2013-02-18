@@ -39,7 +39,7 @@ class Rating extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 *
 	 * @var \string
 	 */
-	protected $object;
+	protected $objectClassName;
 
 	/**
 	 * objectId
@@ -70,23 +70,19 @@ class Rating extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 
 
 	/**
-	 * Returns the object
-	 *
-	 * @return \string $object
+	 * @param string $objectClassName
 	 */
-	public function getObject() {
-		return $this->object;
+	public function setObjectClassName($objectClassName) {
+		$this->objectClassName = $objectClassName;
 	}
 
 	/**
-	 * Sets the object
-	 *
-	 * @param \string $object
-	 * @return void
+	 * @return string
 	 */
-	public function setObject($object) {
-		$this->object = $object;
+	public function getObjectClassName() {
+		return $this->objectClassName;
 	}
+
 
 	/**
 	 * Returns the objectId

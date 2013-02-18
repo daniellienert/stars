@@ -1,8 +1,39 @@
 <?php
 namespace TYPO3\Stars\ViewHelpers\Widget\Controller;
 
+/***************************************************************
+*  Copyright notice
+*
+*  (c) 2013 Daniel Lienert <daniel@lienert.cc>
+*
+*  All rights reserved
+*
+*  This script is part of the TYPO3 project. The TYPO3 project is
+*  free software; you can redistribute it and/or modify
+*  it under the terms of the GNU General Public License as published by
+*  the Free Software Foundation; either version 2 of the License, or
+*  (at your option) any later version.
+*
+*  The GNU General Public License can be found at
+*  http://www.gnu.org/copyleft/gpl.html.
+*
+*  This script is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
+*
+*  This copyright notice MUST APPEAR in all copies of the script!
+***************************************************************/
 
 class RatingController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetController {
+
+
+	/**
+	 * @var \TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface
+	 * @inject
+	 */
+	protected $persistenceManager;
+
 
 	/**
 	 * ratingRepository
@@ -108,23 +139,38 @@ class RatingController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetContro
 	 */
 	protected function createRating() {
 		$rating = new \TYPO3\Stars\Domain\Model\Rating();
-		$rating->setObject(get_class($this->ratingObject));
+		$rating->setObjectClassName(get_class($this->ratingObject));
 		$rating->setObjectId($this->ratingObjectUid);
 		$rating->setPid($this->ratingStoragePid);
 
-		$rating->setIp(\TYPO3\CMS\Core\Utility\GeneralUtility::getIndpEnv('REMOTE_ADDR'));
-		$rating->setCookieId($this->getVotingCookieUid());
+		//$rating->setIp(\TYPO3\CMS\Core\Utility\GeneralUtility::getIndpEnv('REMOTE_ADDR'));
+		//$rating->setCookieId($this->getVotingCookieUid());
 
 		return $rating;
 	}
+
 
 
 	/**
 	 * @param \TYPO3\Stars\Domain\Model\Rating $rating
 	 */
 	protected function saveRateToObject(\TYPO3\Stars\Domain\Model\Rating $rating) {
+		$repositoryName = $this->getRepositoryNameByModelName($rating->getObjectClassName());
 
+		if(class_exists($repositoryName)) {
+			$this->persistenceManager->persistAll();
+			$averageRating = $this->ratingRepository->getAverageRateByClassAndUid($rating->getObjectClassName(), $rating->getObjectId());
+
+			$objectRepository = new $repositoryName();
+			$object = $objectRepository->findByUid($rating->getObjectId());
+
+			if($object !== NULL && method_exists($object, 'setRating')) {
+				$object->setRating($averageRating);
+				$objectRepository->update($object);
+			}
+		}
 	}
+
 
 
 	/**

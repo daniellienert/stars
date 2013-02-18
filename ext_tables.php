@@ -40,4 +40,19 @@ $TCA['tx_stars_domain_model_rating'] = array(
 	),
 );
 
+
+\TYPO3\CMS\Core\Utility\GeneralUtility::loadTCA('pages');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('pages', array(
+		'rating' => array(
+			'exclude' => 0,
+			'label' => 'LLL:EXT:stars/Resources/Private/Language/locallang_db.xlf:tx_stars_domain_model_rating.vote',
+			'config' => array(
+				'type' => 'input',
+				'size' => 30,
+				'eval' => 'trim'
+			),
+		),
+	)
+);
+
 ?>

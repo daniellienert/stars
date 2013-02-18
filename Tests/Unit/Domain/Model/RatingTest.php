@@ -60,11 +60,11 @@ class RatingTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 	 * @test
 	 */
 	public function setObjectForStringSetsObject() { 
-		$this->fixture->setObject('Conceived at T3CON10');
+		$this->fixture->setObjectClassName('Conceived at T3CON10');
 
 		$this->assertSame(
 			'Conceived at T3CON10',
-			$this->fixture->getObject()
+			$this->fixture->getObjectClassName()
 		);
 	}
 	

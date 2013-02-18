@@ -71,7 +71,7 @@ class RatingRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
 
 		$objectCount = $query->matching(
 			$query->logicalAnd(
-				$query->equals('object', $rating->getObject()),
+				$query->equals('object', $rating->getObjectClassName()),
 				$query->equals('objectId', $rating->getObjectId()),
 				$query->logicalOr(
 					$query->equals('ip', $rating->getIp()),

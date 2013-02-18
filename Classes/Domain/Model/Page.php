@@ -1,5 +1,4 @@
 <?php
-namespace TYPO3\Stars\Domain\Model;
 /***************************************************************
 *  Copyright notice
 *
@@ -31,7 +30,7 @@ namespace TYPO3\Stars\Domain\Model;
  * @subpackage Model
  * @author Daniel Lienert <daniel@lienert.cc>
  */
-class Page extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
+class Tx_Stars_Domain_Model_Page extends Tx_Extbase_DomainObject_AbstractEntity {
 
 	/**
 	 * @var float

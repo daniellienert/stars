@@ -1,6 +1,4 @@
 <?php
-namespace TYPO3\Stars\Domain\Repository;
-
 /***************************************************************
  *  Copyright notice
  *
@@ -32,7 +30,7 @@ namespace TYPO3\Stars\Domain\Repository;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class RatingRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
+class Tx_Stars_Domain_Repository_RatingRepository extends Tx_Yag_Domain_Repository_AbstractRepository {
 
 
 	/**
@@ -64,7 +62,7 @@ class RatingRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
 	 * @param \TYPO3\Stars\Domain\Model\Rating $rating
 	 * @return bool
 	 */
-	public function ratingExists(\TYPO3\Stars\Domain\Model\Rating $rating) {
+	public function ratingExists(Tx_Stars_Domain_Model_Rating $rating) {
 		$query = $this->createQuery();
 
 		$query->getQuerySettings()->setStoragePageIds(array($rating->getPid()));

@@ -1,5 +1,4 @@
 <?php
-namespace TYPO3\Stars\Domain\Model;
 
 /***************************************************************
  *  Copyright notice
@@ -32,7 +31,7 @@ namespace TYPO3\Stars\Domain\Model;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Rating extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
+class Tx_Stars_Domain_Model_Rating extends Tx_Extbase_DomainObject_AbstractEntity {
 
 	/**
 	 * object

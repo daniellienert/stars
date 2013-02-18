@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Stars\Tests;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -36,7 +36,7 @@ namespace TYPO3\Stars\Tests;
  *
  * @author Daniel Lienert <daniel@lienert.cc>
  */
-class RatingControllerTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
+class Tx_Stars_Tests_Controller_RatingControllerTest extends Tx_Extbase_BaseTestCase {
 	/**
 	 * @var 
 	 */
@@ -45,7 +45,7 @@ class RatingControllerTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 
 
 	public function setUp() {
-		$this->fixture = new \TYPO3\Stars\Domain\Model\Rating();
+		$this->fixture = new Tx_Stars_ViewHelpers_Widget_Controller_RatingController();
 	}
 
 	public function tearDown() {

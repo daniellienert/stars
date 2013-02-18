@@ -1,7 +1,5 @@
 <?php
 
-namespace TYPO3\Stars\Domain\Repository;
-
 /***************************************************************
 *  Copyright notice
 *
@@ -32,7 +30,7 @@ namespace TYPO3\Stars\Domain\Repository;
  * @subpackage Repository
  * @author Daniel Lienert <daniel@lienert.cc>
  */
-class PageRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
+class Tx_Stars_Domain_Repository_PageRepository extends Tx_Yag_Domain_Repository_AbstractRepository {
 
 }
 ?>

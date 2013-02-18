@@ -1,5 +1,4 @@
 <?php
-namespace TYPO3\Stars\Tests\ViewHelpers\Widget\Controller;
 /***************************************************************
  *  Copyright notice
  *
@@ -36,17 +35,17 @@ namespace TYPO3\Stars\Tests\ViewHelpers\Widget\Controller;
  *
  * @author Daniel Lienert <daniel@lienert.cc>
  */
-class RatingControllerTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
+class Ty_Stars_Tests_ViewHelpers_Widget_Controller_RatingControllerTest extends Tx_Extbase_BaseTestCase {
 
 	/**
-	 * @var \TYPO3\Stars\ViewHelpers\Widget\Controller\RatingController
+	 * @var Tx_Stars_ViewHelpers_Widget_Controller_RatingController
 	 */
 	protected $controllerFixture;
 
 
 
 	public function setUp() {
-		$accessibleClassName = $this->buildAccessibleProxy('TYPO3\Stars\ViewHelpers\Widget\Controller\RatingController');
+		$accessibleClassName = $this->buildAccessibleProxy('Tx_Stars_ViewHelpers_Widget_Controller_RatingController');
 		$this->controllerFixture = new $accessibleClassName();
 	}
 

@@ -1,6 +1,4 @@
 <?php
-namespace TYPO3\Stars\ViewHelpers\Widget\Controller;
-
 /***************************************************************
 *  Copyright notice
 *
@@ -25,11 +23,11 @@ namespace TYPO3\Stars\ViewHelpers\Widget\Controller;
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-class RatingController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetController {
+class Tx_Stars_ViewHelpers_Widget_Controller_RatingController extends Tx_Fluid_Core_Widget_AbstractWidgetController {
 
 
 	/**
-	 * @var \TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface
+	 * @var Tx_Extbase_Persistence_ManagerInterface
 	 * @inject
 	 */
 	protected $persistenceManager;
@@ -38,7 +36,7 @@ class RatingController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetContro
 	/**
 	 * ratingRepository
 	 *
-	 * @var \TYPO3\Stars\Domain\Repository\RatingRepository
+	 * @var Tx_Stars_Domain_Repository_RatingRepository
 	 * @inject
 	 */
 	protected $ratingRepository;
@@ -63,7 +61,7 @@ class RatingController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetContro
 
 
 	/**
-	 * @var \TYPO3\Stars\Validation\Validator\RatingValidator
+	 * @var Tx_Stars_Validation_Validator_RatingValidator
 	 * @inject
 	 */
 	protected $ratingValidator;
@@ -135,10 +133,10 @@ class RatingController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetContro
 
 
 	/**
-	 * @return \TYPO3\Stars\Domain\Model\Rating
+	 * @return Tx_Stars_Domain_Model_Rating
 	 */
 	protected function createRating() {
-		$rating = new \TYPO3\Stars\Domain\Model\Rating();
+		$rating = new Tx_Stars_Domain_Model_Rating();
 		$rating->setObjectClassName(get_class($this->ratingObject));
 		$rating->setObjectId($this->ratingObjectUid);
 		$rating->setPid($this->ratingStoragePid);
@@ -152,9 +150,9 @@ class RatingController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetContro
 
 
 	/**
-	 * @param \TYPO3\Stars\Domain\Model\Rating $rating
+	 * @param Tx_Stars_Domain_Model_Rating $rating
 	 */
-	protected function saveRateToObject(\TYPO3\Stars\Domain\Model\Rating $rating) {
+	protected function saveRateToObject(Tx_Stars_Domain_Model_Rating $rating) {
 		$repositoryName = $this->getRepositoryNameByModelName($rating->getObjectClassName());
 
 		if(class_exists($repositoryName)) {

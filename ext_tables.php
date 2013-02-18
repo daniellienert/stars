@@ -3,16 +3,16 @@ if (!defined('TYPO3_MODE')) {
 	die ('Access denied.');
 }
 
-\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+Tx_Extbase_Utility_Extension::registerPlugin(
 	$_EXTKEY,
 	'Stars',
 	'Stars'
 );
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile($_EXTKEY, 'Configuration/TypoScript', 'Stars');
+t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript', 'Stars');
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_stars_domain_model_rating', 'EXT:stars/Resources/Private/Language/locallang_csh_tx_stars_domain_model_rating.xlf');
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_stars_domain_model_rating');
+t3lib_extMgm::addLLrefForTCAdescr('tx_stars_domain_model_rating', 'EXT:stars/Resources/Private/Language/locallang_csh_tx_stars_domain_model_rating.xlf');
+t3lib_extMgm::allowTableOnStandardPages('tx_stars_domain_model_rating');
 $TCA['tx_stars_domain_model_rating'] = array(
 	'ctrl' => array(
 		'title'	=> 'LLL:EXT:stars/Resources/Private/Language/locallang_db.xlf:tx_stars_domain_model_rating',
@@ -35,14 +35,14 @@ $TCA['tx_stars_domain_model_rating'] = array(
 			'endtime' => 'endtime',
 		),
 		'searchFields' => 'object,object_id,ip,vote,',
-		'dynamicConfigFile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Configuration/TCA/Rating.php',
-		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_stars_domain_model_rating.gif'
+		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/Rating.php',
+		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_stars_domain_model_rating.png'
 	),
 );
 
 
-\TYPO3\CMS\Core\Utility\GeneralUtility::loadTCA('pages');
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('pages', array(
+t3lib_div::loadTCA('pages');
+t3lib_extMgm::addTCAcolumns('pages', array(
 		'rating' => array(
 			'exclude' => 0,
 			'label' => 'LLL:EXT:stars/Resources/Private/Language/locallang_db.xlf:tx_stars_domain_model_rating.vote',

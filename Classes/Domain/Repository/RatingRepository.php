@@ -48,7 +48,7 @@ class Tx_Stars_Domain_Repository_RatingRepository extends Tx_Yag_Domain_Reposito
 
 		$statement = sprintf("SELECT AVG(vote) as avgVote
 						FROM %s
-						WHERE object = '%s'
+						WHERE object_class = '%s'
 						AND object_id = %s
 						GROUP by object_id", 'tx_stars_domain_model_rating', $objectClass, $objectUid);
 
@@ -69,7 +69,7 @@ class Tx_Stars_Domain_Repository_RatingRepository extends Tx_Yag_Domain_Reposito
 
 		$objectCount = $query->matching(
 			$query->logicalAnd(
-				$query->equals('object', $rating->getObjectClassName()),
+				$query->equals('objectClass', $rating->getObjectClass()),
 				$query->equals('objectId', $rating->getObjectId()),
 				$query->logicalOr(
 					$query->equals('ip', $rating->getIp()),

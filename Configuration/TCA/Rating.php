@@ -93,9 +93,9 @@ $TCA['tx_stars_domain_model_rating'] = array(
 				),
 			),
 		),
-		'object' => array(
+		'object_class' => array(
 			'exclude' => 0,
-			'label' => 'LLL:EXT:stars/Resources/Private/Language/locallang_db.xlf:tx_stars_domain_model_rating.object',
+			'label' => 'LLL:EXT:stars/Resources/Private/Language/locallang_db.xlf:tx_stars_domain_model_rating.object_class',
 			'config' => array(
 				'type' => 'input',
 				'size' => 30,

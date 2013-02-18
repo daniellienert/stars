@@ -7,7 +7,7 @@
 			<trans-unit id="tx_stars_domain_model_rating">
 				<source>Rating</source>
 			</trans-unit>
-			<trans-unit id="tx_stars_domain_model_rating.object">
+			<trans-unit id="tx_stars_domain_model_rating.object_class">
 				<source>object</source>
 			</trans-unit>
 			<trans-unit id="tx_stars_domain_model_rating.object_id">

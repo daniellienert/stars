@@ -49,9 +49,9 @@ class Tx_Stars_ViewHelpers_Widget_Controller_RatingController extends Tx_Fluid_C
 
 
 	/**
-	 * @var object
+	 * @var string
 	 */
-	protected $ratingObject;
+	protected $ratingObjectClass;
 
 
 	/**
@@ -69,17 +69,8 @@ class Tx_Stars_ViewHelpers_Widget_Controller_RatingController extends Tx_Fluid_C
 
 	public function initializeAction() {
 		$this->ratingStoragePid = (int) $this->widgetConfiguration['storagePid'];
-		$this->ratingObject = $this->widgetConfiguration['ratingObject'];
-
-		if($this->ratingObject !== NULL
-			&& is_object($this->ratingObject)
-			&& method_exists($this->ratingObject, 'getUid')
-			&& $this->ratingObject->getUid() > 0
-		) {
-			$this->ratingObjectUid = $this->ratingObject->getUid();
-		} else {
-			Throw new \TYPO3\CMS\Extbase\Configuration\Exception('Given object is not a valid voting object');
-		}
+		$this->ratingObjectClass = $this->widgetConfiguration['ratingObjectClass'];
+		$this->ratingObjectUid = (int) $this->widgetConfiguration['ratingObjectUid'];
 	}
 
 
@@ -89,9 +80,9 @@ class Tx_Stars_ViewHelpers_Widget_Controller_RatingController extends Tx_Fluid_C
 	public function indexAction() {
 
 		$this->view->assignMultiple(array(
-			'ratingObjectUid' => $this->ratingObject->getUid(),
-			'ratingObjectClass' => get_class($this->ratingObject),
-			'averageVote' => $this->ratingRepository->getAverageRateByClassAndUid(get_class($this->ratingObject), $this->ratingObjectUid),
+			'ratingObjectUid' => $this->ratingObjectUid,
+			'ratingObjectClass' => $this->ratingObjectClass,
+			'averageVote' => $this->ratingRepository->getAverageRateByClassAndUid($this->ratingObjectClass, $this->ratingObjectUid),
 			'starCount' => (int) $this->widgetConfiguration['starCount'],
 			'widgetId' => $this->controllerContext->getRequest()->getWidgetContext()->getAjaxWidgetIdentifier()
 			)
@@ -137,7 +128,7 @@ class Tx_Stars_ViewHelpers_Widget_Controller_RatingController extends Tx_Fluid_C
 	 */
 	protected function createRating() {
 		$rating = new Tx_Stars_Domain_Model_Rating();
-		$rating->setObjectClassName(get_class($this->ratingObject));
+		$rating->setObjectClass($this->ratingObjectClass);
 		$rating->setObjectId($this->ratingObjectUid);
 		$rating->setPid($this->ratingStoragePid);
 
@@ -153,11 +144,11 @@ class Tx_Stars_ViewHelpers_Widget_Controller_RatingController extends Tx_Fluid_C
 	 * @param Tx_Stars_Domain_Model_Rating $rating
 	 */
 	protected function saveRateToObject(Tx_Stars_Domain_Model_Rating $rating) {
-		$repositoryName = $this->getRepositoryNameByModelName($rating->getObjectClassName());
+		$repositoryName = $this->getRepositoryNameByModelName($rating->getObjectClass());
 
 		if(class_exists($repositoryName)) {
 			$this->persistenceManager->persistAll();
-			$averageRating = $this->ratingRepository->getAverageRateByClassAndUid($rating->getObjectClassName(), $rating->getObjectId());
+			$averageRating = $this->ratingRepository->getAverageRateByClassAndUid($rating->getObjectClass(), $rating->getObjectId());
 
 			$objectRepository = new $repositoryName();
 			$object = $objectRepository->findByUid($rating->getObjectId());

@@ -59,11 +59,11 @@ class RatingTest extends Tx_Extbase_BaseTestCase {
 	 * @test
 	 */
 	public function setObjectForStringSetsObject() { 
-		$this->fixture->setObjectClassName('Conceived at T3CON10');
+		$this->fixture->setObjectClass('Conceived at T3CON10');
 
 		$this->assertSame(
 			'Conceived at T3CON10',
-			$this->fixture->getObjectClassName()
+			$this->fixture->getObjectClass()
 		);
 	}
 	

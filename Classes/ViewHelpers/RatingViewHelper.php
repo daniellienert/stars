@@ -37,15 +37,49 @@ class Tx_Stars_ViewHelpers_RatingViewHelper extends Tx_Fluid_Core_Widget_Abstrac
 	protected $controller;
 
 
+	public function initializeArguments() {
+		$this->registerArgument('ratingObject', 'object', 'Object to rate.', FALSE);
+		$this->registerArgument('ratingObjectClass', 'string', 'Object to rate.', FALSE);
+		$this->registerArgument('ratingObjectUid', 'integer', 'Object to rate.', FALSE);
+
+		parent::initializeArguments();
+	}
+
+
+	public function initialize() {
+		$this->convertRatingObject();
+	}
+
+
 	/**
-	 * @param object $ratingObject
 	 * @param int $starCount
 	 * @param int $storagePid
 	 * @param bool $allowMultipleRating
 	 * @return Tx_Extbase_MVC_ResponseInterface
 	 */
-	public function render($ratingObject, $starCount=5, $storagePid=0, $allowMultipleRating = FALSE) {
+	public function render($starCount=5, $storagePid=0, $allowMultipleRating = FALSE) {
 		return $this->initiateSubRequest();
+	}
+
+
+	/**
+	 * Sets the values RatingObjectClass / RatingObjectUid from the rating object
+	 * We cannot use the object directly as it may contain closures which crashes the
+	 * serialization later done by the widget.
+	 */
+	protected function convertRatingObject() {
+		$ratingObject = $this->arguments['ratingObject'];
+
+		if($ratingObject !== NULL
+			&& is_object($ratingObject)
+			&& method_exists($ratingObject, 'getUid')
+			&& $ratingObject->getUid() > 0
+		) {
+			$this->arguments['ratingObjectUid'] = $ratingObject->getUid();
+			$this->arguments['ratingObjectClass'] = get_class($ratingObject);
+		}
+
+		unset($this->arguments['ratingObject']);
 	}
 }
 

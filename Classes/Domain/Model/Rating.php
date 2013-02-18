@@ -38,7 +38,7 @@ class Tx_Stars_Domain_Model_Rating extends Tx_Extbase_DomainObject_AbstractEntit
 	 *
 	 * @var \string
 	 */
-	protected $objectClassName;
+	protected $objectClass;
 
 	/**
 	 * objectId
@@ -69,17 +69,17 @@ class Tx_Stars_Domain_Model_Rating extends Tx_Extbase_DomainObject_AbstractEntit
 
 
 	/**
-	 * @param string $objectClassName
+	 * @param string $objectClass
 	 */
-	public function setObjectClassName($objectClassName) {
-		$this->objectClassName = $objectClassName;
+	public function setObjectClass($objectClass) {
+		$this->objectClass = $objectClass;
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getObjectClassName() {
-		return $this->objectClassName;
+	public function getObjectClass() {
+		return $this->objectClass;
 	}
 
 

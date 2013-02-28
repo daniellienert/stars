@@ -35,19 +35,62 @@ class Tx_Stars_Validation_Validator_RatingValidator {
 	protected $ratingRepository;
 
 
+	/**
+	 * @var int
+	 */
+	protected $maxUserRatings = 0;
+
+
+	/**
+	 * @var int
+	 */
+	protected $maxUserRatingsOnObject = 1;
+
+
+	/**
+	 * @param Tx_Stars_Domain_Model_Rating $rating
+	 * @return bool
+	 */
 	public function isValid(Tx_Stars_Domain_Model_Rating $rating) {
+		return $this->isValidByMaxUserRatingsOnObject($rating) && $this->isValidByMaxUserRatings($rating);
+	}
 
-		if($this->ratingRepository->ratingExists($rating) === FALSE) {
-			return TRUE;
-		} else {
-			return FALSE;
-		}
 
+	/**
+	 * @param Tx_Stars_Domain_Model_Rating $rating
+	 * @return bool
+	 */
+	public function isValidByMaxUserRatingsOnObject(Tx_Stars_Domain_Model_Rating $rating) {
+		return $this->ratingRepository->getRatingCountForObjectAndUser($rating) < $this->maxUserRatingsOnObject ? TRUE : FALSE;
 	}
 
 
 
+	/**
+	 * @param Tx_Stars_Domain_Model_Rating $rating
+	 * @return bool
+	 */
+	public function isValidByMaxUserRatings(Tx_Stars_Domain_Model_Rating $rating) {
+		return $this->ratingRepository->getRatingCountForUser($rating) < $this->maxUserRatings ? TRUE : FALSE;
+	}
 
+
+
+	/**
+	 * @param int $maxUserRatings
+	 */
+	public function setMaxUserRatings($maxUserRatings) {
+		$this->maxUserRatings = $maxUserRatings;
+	}
+
+
+
+	/**
+	 * @param int $maxUserRatingsOnObject
+	 */
+	public function setMaxUserRatingsOnObject($maxUserRatingsOnObject) {
+		$this->maxUserRatingsOnObject = $maxUserRatingsOnObject;
+	}
 }
 
 ?>

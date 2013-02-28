@@ -58,11 +58,37 @@ class Tx_Stars_Domain_Repository_RatingRepository extends Tx_Yag_Domain_Reposito
 	}
 
 
+
 	/**
-	 * @param \TYPO3\Stars\Domain\Model\Rating $rating
-	 * @return bool
+	 * @param $objectClass
+	 * @param $objectUid
+	 * @return int
 	 */
-	public function ratingExists(Tx_Stars_Domain_Model_Rating $rating) {
+	public function getRatingSumByClassAndUid($objectClass, $objectUid) {
+		$objectClass = str_replace('\\', '\\\\', $objectClass);
+
+		$query = $this->createQuery();
+		$query->getQuerySettings()->setRespectStoragePage(FALSE);
+		$query->getQuerySettings()->setReturnRawQueryResult(TRUE);
+
+		$statement = sprintf("SELECT SUM(vote) as sumVote
+						FROM %s
+						WHERE object_class = '%s'
+						AND object_id = %s
+						GROUP by object_id", 'tx_stars_domain_model_rating', $objectClass, $objectUid);
+
+		$result = $query->statement($statement)->execute();
+
+		return (int) $result[0]['sumVote'];
+	}
+
+
+
+	/**
+	 * @param Tx_Stars_Domain_Model_Rating $rating
+	 * @return int
+	 */
+	public function getRatingCountForObjectAndUser(Tx_Stars_Domain_Model_Rating $rating) {
 		$query = $this->createQuery();
 
 		$query->getQuerySettings()->setStoragePageIds(array($rating->getPid()));
@@ -77,10 +103,30 @@ class Tx_Stars_Domain_Repository_RatingRepository extends Tx_Yag_Domain_Reposito
 				)
 			)
 
-		)->count();
+		)->execute()->count();
 
-		return $objectCount > 0 ? TRUE : FALSE;
+		return $objectCount;
 	}
 
+
+
+	/**
+	 * @param Tx_Stars_Domain_Model_Rating $rating
+	 * @return int
+	 */
+	public function getRatingCountForUser(Tx_Stars_Domain_Model_Rating $rating) {
+		$query = $this->createQuery();
+
+		$query->getQuerySettings()->setStoragePageIds(array($rating->getPid()));
+
+		$objectCount = $query->matching(
+			$query->logicalOr(
+				$query->equals('ip', $rating->getIp()),
+				$query->equals('cookieId', $rating->getCookieId())
+			)
+		)->execute()->count();
+
+		return $objectCount;
+	}
 }
 ?>

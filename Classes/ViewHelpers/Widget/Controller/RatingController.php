@@ -132,7 +132,7 @@ class Tx_Stars_ViewHelpers_Widget_Controller_RatingController extends Tx_Fluid_C
 		$rating->setObjectId($this->ratingObjectUid);
 		$rating->setPid($this->ratingStoragePid);
 
-		//$rating->setIp(\TYPO3\CMS\Core\Utility\GeneralUtility::getIndpEnv('REMOTE_ADDR'));
+		//$rating->setIp(t3lib_div::getIndpEnv('REMOTE_ADDR'));
 		//$rating->setCookieId($this->getVotingCookieUid());
 
 		return $rating;

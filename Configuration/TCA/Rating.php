@@ -120,6 +120,15 @@ $TCA['tx_stars_domain_model_rating'] = array(
 				'eval' => 'trim'
 			),
 		),
+		'remote_host' => array(
+			'exclude' => 0,
+			'label' => 'LLL:EXT:stars/Resources/Private/Language/locallang_db.xlf:tx_stars_domain_model_rating.remote_host',
+			'config' => array(
+				'type' => 'input',
+				'size' => 30,
+				'eval' => 'trim'
+			),
+		),
 		'vote' => array(
 			'exclude' => 0,
 			'label' => 'LLL:EXT:stars/Resources/Private/Language/locallang_db.xlf:tx_stars_domain_model_rating.vote',

@@ -9,6 +9,7 @@ CREATE TABLE tx_stars_domain_model_rating (
 	object_class varchar(255) DEFAULT '' NOT NULL,
 	object_id int(11) DEFAULT '0' NOT NULL,
 	ip varchar(255) DEFAULT '' NOT NULL,
+	remote_host varchar(255) DEFAULT '' NOT NULL,
 	cookie_id varchar(255) DEFAULT '' NOT NULL,
 	vote varchar(255) DEFAULT '' NOT NULL,
 

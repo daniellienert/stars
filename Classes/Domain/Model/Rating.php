@@ -54,6 +54,13 @@ class Tx_Stars_Domain_Model_Rating extends Tx_Extbase_DomainObject_AbstractEntit
 	 */
 	protected $ip;
 
+
+	/**
+	 * @var \string
+	 */
+	protected $remoteHost;
+
+
 	/**
 	 * vote
 	 *
@@ -152,6 +159,20 @@ class Tx_Stars_Domain_Model_Rating extends Tx_Extbase_DomainObject_AbstractEntit
 	 */
 	public function getCookieId() {
 		return $this->cookieId;
+	}
+
+	/**
+	 * @param string $remoteHost
+	 */
+	public function setRemoteHost($remoteHost) {
+		$this->remoteHost = $remoteHost;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getRemoteHost() {
+		return $this->remoteHost;
 	}
 }
 ?>

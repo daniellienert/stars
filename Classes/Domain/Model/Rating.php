@@ -68,11 +68,19 @@ class Tx_Stars_Domain_Model_Rating extends Tx_Extbase_DomainObject_AbstractEntit
 	 */
 	protected $vote;
 
+
 	/**
 	 * @var string
 	 */
 	protected $cookieId;
 
+
+	/**
+	 * Returns a verification string
+	 */
+	public function getRatingVerifier() {
+		return md5($this->cookieId . $this->getIp());
+	}
 
 
 	/**
